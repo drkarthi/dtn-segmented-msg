@@ -168,11 +168,12 @@ public class blind_push
       	    {
       	      bandwidth+=1;
       	      nod[d].msg[j]=1;
-      	      if(j==msg_size-1)                          // if last packet is transferred
-      		      mid.add(d);                               // neighbour becomes a sender
+      	      // if(j==msg_size-1)                          // if last packet is transferred
+      		      // mid.add(d);                               // neighbour becomes a sender
       	      count += 1;
               if(j==msg_size-1)
               {
+                mid.add(d);
                 partial_wastage = (1-count/(float)k);
                 wastage += partial_wastage;
                 break;

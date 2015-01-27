@@ -1,5 +1,4 @@
 import subprocess
-import matplotlib.pyplot as plt
 import sys
 
 no_of_nodes = 10879
@@ -14,8 +13,8 @@ def run_shell_cmd(cmd1, cmd2):
 	return output_list
 
 def find_mean_values():	
-	N = 20
-	m = [4,8,16,24,32]
+	N = 10
+	m = [64,128,256,512,1024]
 	wastage_sum = [ [0 for x in range(4)] for y in range(5)] 			# 4 -> number of algos, 5-> number of message sizes
 	time_sum = [ [0 for x in range(4)] for y in range(5)]
 	bandwidth_sum = [ [0 for x in range(4)] for y in range(5)]
@@ -30,7 +29,7 @@ def find_mean_values():
 			for i in range(4):
 				output_list = run_shell_cmd(cmds[i][0], cmds[i][1])
 				time_sum[j][i] += int(output_list[0])
-				wastage_sum[j][i] += int(output_list[1])
+				wastage_sum[j][i] += float(output_list[1])
 				bandwidth_sum[j][i] += int(output_list[2])
 		for i in range(4):
 			avg_time[j][i] = time_sum[j][i]/float(N)
@@ -84,7 +83,17 @@ def plot_bar_graph(time, wastage, coverage):
 	plt.yticks(range(0,100,20))
 	plt.show()
 
+def write_to_file(time, wastage, coverage):
+	combined_time, combined_wastage, combined_coverage = get_combined_lists(time,wastage,coverage)
+	filename = "metrics_"+distribution+"_"+str(mean)
+	f = open(filename, 'w')
+	f.write(str(combined_time)+'\n')
+	f.write(str(combined_wastage)+'\n')
+	f.write(str(combined_coverage)+'\n')
+
 if __name__=="__main__":
 	avg_time,inefficiency,coverage = find_mean_values()
+	# write_to_file(avg_time,inefficiency,coverage)
 	if(len(sys.argv) != 4 or sys.argv[3]!='noplot'):
+		import matplotlib.pyplot as plt
 		plot_bar_graph(avg_time,inefficiency,coverage)	

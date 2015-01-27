@@ -33,7 +33,7 @@ public class xpercentstrategy {
 		int minimum=0;
 		int maximum=no_of_nodes-1;
 		int bandwidth=0;
-		int wastage=0;
+		float wastage=0;
 		int count=1;
 		int transfer_count = 0; 										// stores the number of transferred packets during each connection
 		int no_of_transfer_packets = 0;
@@ -124,6 +124,7 @@ public class xpercentstrategy {
 	    }
 
 		int time=0;
+		float partial_wastage = 0;
 		Random rn = new Random();  //  A random source is selected to start the broadcast........
 		int range = maximum - minimum + 1;
 		int randomNum =  rn.nextInt(range) + minimum;
@@ -193,8 +194,13 @@ public class xpercentstrategy {
 								bandwidth++;
 								transfer_count += 1;
 								if(k==msg_size-1)
+								{
 									mid.add(n);
-								if(transfer_count==no_of_transfer_packets || k==msg_size-1)
+									partial_wastage = 1 - transfer_count/(float)no_of_transfer_packets;
+									wastage += partial_wastage;
+									break;
+								}
+								if(transfer_count==no_of_transfer_packets)
 									break; 						
 							}
 						}
@@ -260,8 +266,13 @@ public class xpercentstrategy {
 								pulls++;
 								transfer_count += 1;
 								if(k==msg_size-1)
+								{
 									mid.add(n);
-								if(transfer_count==no_of_transfer_packets || k==msg_size-1)
+									partial_wastage = 1 - transfer_count/(float)no_of_transfer_packets;
+									wastage += partial_wastage;
+									break;
+								}
+								if(transfer_count==no_of_transfer_packets)
 									break;
 							}
 						}

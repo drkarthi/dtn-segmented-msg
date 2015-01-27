@@ -20,7 +20,8 @@ public class push_with_giveup
     int mean = Integer.parseInt(args[2]);
     int maximum=no_of_nodes-1;
     int minimum=0;
-    int wastage=0;
+    float wastage=0;
+    float partial_wastage = 0;
     int bandwidth=0;
     int no_of_transfer_packets=0;
     int transfer_count=0;
@@ -184,13 +185,18 @@ public class push_with_giveup
 						transfer_count += 1;
 						nod[d].msg[j]=1;
 						if(j==msg_size-1)
+            {
 						  mid.add(d);
+              partial_wastage = 1 - transfer_count/(float)no_of_transfer_packets;
+              wastage += partial_wastage;
+              break;
+            }
 						if(isPresent(d,nod[s].dis_neighbor)==0)   // checking whether the neighbor already discovered else add each other to the list of discovered neighbors
 						{
 							nod[s].dis_neighbor.add(d);
 							nod[d].dis_neighbor.add(s);
 						}
-						if(transfer_count==no_of_transfer_packets || j==msg_size-1)  
+						if(transfer_count==no_of_transfer_packets)  
 							break; 								
 		      }
 		    }

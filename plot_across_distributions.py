@@ -1,5 +1,4 @@
 import subprocess
-import matplotlib.pyplot as plt
 import sys
 
 def plot_across_distributions(l, title, loc=3): 		# l is of the form [ [1,2,3,4,5],[6,7,8,9,10],[11,12,13,14,15],[16,17,18,19,20] ]
@@ -12,6 +11,10 @@ def plot_across_distributions(l, title, loc=3): 		# l is of the form [ [1,2,3,4,
 	plt.title(title)
 	plt.legend(loc=loc, numpoints=1)
 	plt.show()
+
+def write_to_file(l, filename):
+	f = open(filename, 'w')
+	f.write(str(l))
 
 if __name__=='__main__':
 	distribution_list = ['uniform', 'gaussian', 'powerlaw', 'poisson']
@@ -37,15 +40,30 @@ if __name__=='__main__':
 	print PG_list
 	print PPG_list
 
-	plot_across_distributions(BP_list[0], 'BP-Time vs Message size', 2)
-	plot_across_distributions(BP_list[1], 'BP-Wastage vs Message size')
-	plot_across_distributions(BP_list[2], 'BP-Coverage vs Message size')
-	plot_across_distributions(XPP_list[0], 'XPP-Time vs Message size', 2)
-	plot_across_distributions(XPP_list[1], 'XPP-Wastage vs Message size')
-	plot_across_distributions(XPP_list[2], 'XPP-Coverage vs Message size')
-	plot_across_distributions(PG_list[0], 'PG-Time vs Message size', 2)
-	plot_across_distributions(PG_list[1], 'PG-Wastage vs Message size')
-	plot_across_distributions(PG_list[2], 'PG-Coverage vs Message size')
-	plot_across_distributions(PPG_list[0], 'PPG-Time vs Message size', 2)
-	plot_across_distributions(PPG_list[1], 'PPG-Wastage vs Message size')
-	plot_across_distributions(PPG_list[2], 'PPG-Coverage vs Message size')		
+	if(len(sys.argv)!=3 or sys.argv[2]!='noplot'):
+		import matplotlib.pyplot as plt
+		plot_across_distributions(BP_list[0], 'BP-Time vs Message size', 2)
+		plot_across_distributions(BP_list[1], 'BP-Wastage vs Message size')
+		plot_across_distributions(BP_list[2], 'BP-Coverage vs Message size')
+		plot_across_distributions(XPP_list[0], 'XPP-Time vs Message size', 2)
+		plot_across_distributions(XPP_list[1], 'XPP-Wastage vs Message size')
+		plot_across_distributions(XPP_list[2], 'XPP-Coverage vs Message size')
+		plot_across_distributions(PG_list[0], 'PG-Time vs Message size', 2)
+		plot_across_distributions(PG_list[1], 'PG-Wastage vs Message size')
+		plot_across_distributions(PG_list[2], 'PG-Coverage vs Message size')
+		plot_across_distributions(PPG_list[0], 'PPG-Time vs Message size', 2)
+		plot_across_distributions(PPG_list[1], 'PPG-Wastage vs Message size')
+		plot_across_distributions(PPG_list[2], 'PPG-Coverage vs Message size')
+
+	write_to_file(BP_list[0], 'BP-Time vs Message size')
+	write_to_file(BP_list[1], 'BP-Wastage vs Message size')
+	write_to_file(BP_list[2], 'BP-Coverage vs Message size')
+	write_to_file(XPP_list[0], 'XPP-Time vs Message size')
+	write_to_file(XPP_list[1], 'XPP-Wastage vs Message size')
+	write_to_file(XPP_list[2], 'XPP-Coverage vs Message size')
+	write_to_file(PG_list[0], 'PG-Time vs Message size')
+	write_to_file(PG_list[1], 'PG-Wastage vs Message size')
+	write_to_file(PG_list[2], 'PG-Coverage vs Message size')
+	write_to_file(PPG_list[0], 'PPG-Time vs Message size')
+	write_to_file(PPG_list[1], 'PPG-Wastage vs Message size')
+	write_to_file(PPG_list[2], 'PPG-Coverage vs Message size')		

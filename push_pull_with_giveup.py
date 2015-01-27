@@ -35,10 +35,8 @@ if __name__=="__main__":
 	mean = int(sys.argv[3])
 	nodes = []
 	sources = []
-	# gaussian_sample = list(np.random.normal(1,1,10000))
 	gaussian_sample = []
 	power_law_sample = []
-	# poisson_sample = list(np.random.poisson(1,10000))
 	poisson_sample = []
 	read_sample('gaussian_distribution.txt', gaussian_sample)
 	read_sample('powerlaw_distribution.txt', power_law_sample)
@@ -84,6 +82,7 @@ if __name__=="__main__":
 					# print "ps_count = ",nodes[source].ps_count
 					# print "threshold = ",math.log(1/(1-p))*(len(nodes[source].discovered_neighbours)+1)
 					sources.remove(source)
+			# picking the number of packets from the distribution
 			elif(nodes[neighbour_id].src == 0):
 				no_of_transfer_packets = 0
 				while(no_of_transfer_packets < 1):
@@ -112,6 +111,8 @@ if __name__=="__main__":
 						nodes[neighbour_id].src = 1
 						sources.append(neighbour_id)
 						nodes[neighbour_id].sleep_time = 0
+						partial_wastage = 1 - transfer_count/float(no_of_transfer_packets)
+						wastage += partial_wastage
 						break
 					pkt += 1
 					
@@ -167,6 +168,8 @@ if __name__=="__main__":
 							nodes[x].src = 1
 							sources.append(nodes[x].id)	 							# updating sources
 							nodes[x].sleep_time = 0
+							partial_wastage = 1 - transfer_count/float(no_of_transfer_packets)
+							wastage += partial_wastage
 							break
 						pkt += 1	
 				
